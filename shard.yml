@@ -1,0 +1,17 @@
+name: mazes_api
+version: 0.1.0
+
+authors:
+  - Nathan Mertins <nwmertins@gmail.com>
+
+targets:
+  mazes_api:
+    main: src/mazes_api.cr
+
+dependencies:
+  mazes.cr:
+    path: ../mazes.cr
+
+crystal: 0.35.1
+
+license: MIT
