@@ -1,11 +1,11 @@
-name: mazes_api
+name: mazes.api
 version: 0.1.0
 
 authors:
   - Nathan Mertins <nwmertins@gmail.com>
 
 targets:
-  mazes_api:
+  mazes.api:
     main: src/mazes_api.cr
 
 dependencies:
