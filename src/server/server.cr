@@ -36,6 +36,15 @@ module MazesApi
         end
 
         response.output << body
+      when "/favicon.ico"
+        response = context.response
+
+        response.status = HTTP::Status::OK
+        response.content_type = "image/x-icon"
+        
+        body = File.read("resources/favicon.ico")
+
+        response.output << body
       when "/foo"
         response = context.response
 
