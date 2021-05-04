@@ -1,5 +1,6 @@
 require "http"
 require "json"
+require "./mazes_handler.cr"
 
 module MazesApi
   class MazesServer
@@ -7,6 +8,7 @@ module MazesApi
       @server = HTTP::Server.new([
         HTTP::ErrorHandler.new,
         HTTP::LogHandler.new,
+        TopLevelHandler.new,
         MazesHandler.new
       ])
       
@@ -18,7 +20,7 @@ module MazesApi
     end
   end
 
-  class MazesHandler
+  class TopLevelHandler
     include HTTP::Handler
     
     def call(context)
@@ -31,11 +33,13 @@ module MazesApi
         
         body = JSON.build do |json|
           json.object do
-            json.field("message", "You hit the base URI")
+            json.field("message", "Welcome to mazes.cr!")
           end
         end
 
         response.output << body
+        response.close
+
       when "/favicon.ico"
         response = context.response
 
@@ -45,24 +49,10 @@ module MazesApi
         body = File.read("resources/favicon.ico")
 
         response.output << body
-      when "/foo"
-        response = context.response
+        response.close
 
-        response.status = HTTP::Status::OK
-        response.content_type = "application/json"
-        
-        body = JSON.build do |json|
-          json.object do
-            json.field("message", "bar")
-          end
-        end
-
-        response.output << body
-      else
-        context.response.status = HTTP::Status::NOT_IMPLEMENTED
       end
 
-      context.response.close
       call_next(context)
     end
   end
