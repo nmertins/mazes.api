@@ -1,6 +1,6 @@
 require "http"
 require "json"
-require "mazes.cr"
+require "mazes.cr/src/mazes/*"
 
 module MazesApi
   class MazesHandler
