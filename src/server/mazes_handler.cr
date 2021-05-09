@@ -7,16 +7,21 @@ module MazesApi
     include HTTP::Handler
 
     def call(context)
-      case context.request.path
+      request = context.request
+
+      case request.path
       when "/v1/mazes"
+        params = request.query_params
+        size = params.has_key?("size") ? params["size"].to_i : 10
+
+        grid = Mazes::Grid.new(size, size)
+        Mazes::Sidewinder.on(grid)
+        
         response = context.response
 
         response.status = HTTP::Status::OK
         response.content_type = "application/json"
         
-        grid = Mazes::Grid.new(10, 10)
-        Mazes::Sidewinder.on(grid)
-
         grid.to_json(response.output)
 
         response.close

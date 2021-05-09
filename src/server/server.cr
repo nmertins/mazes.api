@@ -38,7 +38,6 @@ module MazesApi
         end
 
         response.output << body
-        response.close
 
       when "/favicon.ico"
         response = context.response
@@ -49,7 +48,6 @@ module MazesApi
         body = File.read("resources/favicon.ico")
 
         response.output << body
-        response.close
 
       end
 
